@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funny Cat Site</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <img id="catImage" src="" alt="Funny Cat Image">
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const catImage = document.getElementById("catImage");
+
+            document.addEventListener("keydown", async function (event) {
+                if (event.code === "Space") {
+                    changeCatImage();
+                }
+            });
+
+            async function changeCatImage() {
+                const catApiUrl = "https://api.thecatapi.com/v1/images/search";
+                
+                try {
+                    const response = await fetch(catApiUrl);
+                    const data = await response.json();
+                    const imageUrl = data[0].url;
+                    catImage.src = imageUrl;
+                } catch (error) {
+                    console.error("Error fetching cat image:", error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
